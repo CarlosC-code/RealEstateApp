@@ -1,0 +1,58 @@
+﻿@model List<RealEstateApp.Core.Application.Dtos.Admin.AgentListDto>
+
+@{
+    ViewData["Title"] = "Listado de Agentes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-user-tie me-2"></i>Listado de Agentes</h2>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-1"></i>Volver
+    </a>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Propiedades</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var agent in Model)
+                {
+                    <tr>
+                        <td>@agent.FullName</td>
+                        <td>@agent.Email</td>
+                        <td>@agent.PropertyCount</td>
+                        <td>
+                            <span class="badge @(agent.IsActive ? "bg-success" : "bg-danger")">
+                                @(agent.IsActive ? "Activo" : "Inactivo")
+                            </span>
+                        </td>
+                        <td>
+                            <a asp-action="ToggleAgentStatus" asp-route-id="@agent.Id"
+                               class="btn btn-sm @(agent.IsActive ? "btn-warning" : "btn-success")">
+                                <i class="fas @(agent.IsActive ? "fa-ban" : "fa-check") me-1"></i>
+                                @(agent.IsActive ? "Inactivar" : "Activar")
+                            </a>
+                            <a asp-action="DeleteAgent" asp-route-id="@agent.Id" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash me-1"></i>Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

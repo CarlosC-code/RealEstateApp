@@ -1,0 +1,109 @@
+﻿@model List<RealEstateApp.Core.Application.Dtos.Property.PropertyDto>
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<!-- Filtros -->
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <form asp-action="Index" method="get">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Buscar por código</label>
+                    <input type="text" name="code" class="form-control" placeholder="Código de propiedad" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Tipo de propiedad</label>
+                    <select name="propertyTypeId" class="form-select">
+                        <option value="">Todos</option>
+                        @foreach (var type in ViewBag.PropertyTypes)
+                        {
+                            <option value="@type.Id">@type.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Precio mínimo</label>
+                    <input type="number" name="minPrice" class="form-control" placeholder="Mínimo" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Precio máximo</label>
+                    <input type="number" name="maxPrice" class="form-control" placeholder="Máximo" />
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label">Hab.</label>
+                    <input type="number" name="bedrooms" class="form-control" placeholder="0" />
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label">Baños</label>
+                    <input type="number" name="bathrooms" class="form-control" placeholder="0" />
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search me-2"></i>Buscar
+                </button>
+                <a asp-action="Index" class="btn btn-secondary ms-2">
+                    <i class="fas fa-times me-2"></i>Limpiar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Listado de propiedades -->
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <i class="fas fa-home fa-5x text-muted mb-3"></i>
+        <h4 class="text-muted">No se encontraron propiedades</h4>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var property in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    @if (property.Images != null && property.Images.Any())
+                    {
+                        <img src="@property.Images.First()" class="card-img-top" style="height:200px;object-fit:cover;" alt="Propiedad" />
+                    }
+                    else
+                    {
+                        <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:200px;">
+                            <i class="fas fa-home fa-3x"></i>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">@property.PropertyTypeName</span>
+                        <span class="badge bg-success mb-2">@property.SaleTypeName</span>
+                        <h6 class="card-title">Código: @property.Code</h6>
+                        <h5 class="text-primary">RD$ @property.Price.ToString("N2")</h5>
+                        <div class="d-flex gap-3 text-muted">
+                            <span><i class="fas fa-bed me-1"></i>@property.Bedrooms</span>
+                            <span><i class="fas fa-bath me-1"></i>@property.Bathrooms</span>
+                            <span><i class="fas fa-ruler-combined me-1"></i>@property.LandSize mt</span>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex gap-2">
+                        <a asp-action="Detail" asp-route-id="@property.Id" class="btn btn-outline-primary btn-sm flex-grow-1">
+                            <i class="fas fa-eye me-1"></i>Ver detalle
+                        </a>
+                        @if (User.IsInRole("Client"))
+                        {
+                            <form asp-action="ToggleFavorite" method="post">
+                                <input type="hidden" name="propertyId" value="@property.Id" />
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

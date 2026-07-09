@@ -1,0 +1,86 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Include="obj\Debug\net9.0\.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" />
+	  <Compile Include="obj\Debug\net9.0\RealEstateApp.WebApi.AssemblyInfo.cs" />
+	  <Compile Include="obj\Debug\net9.0\RealEstateApp.WebApi.GlobalUsings.g.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="obj\Debug\net9.0\RealEstateApp.WebApi.csproj.FileListAbsolute.txt" />
+	  <Content Include="obj\Debug\net9.0\staticwebassets.references.upToDateCheck.txt" />
+	  <Content Include="obj\Debug\net9.0\staticwebassets.removed.txt" />
+	  <Content Include="obj\project.assets.json" />
+	  <Content Include="obj\RealEstateApp.WebApi.csproj.nuget.dgspec.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Asp.Versioning.Http" Version="8.1.1" />
+		<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
+		<PackageReference Include="Microsoft.OpenApi" Version="1.6.22" />
+		<PackageReference Include="Serilog" Version="4.3.1" />
+		<PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="10.0.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.9.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\RealEstateApp.Core.Application\RealEstateApp.Core.Application.csproj" />
+		<ProjectReference Include="..\RealEstateApp.Infrastructure.Persistence\RealEstateApp.Infrastructure.Persistence.csproj" />
+		<ProjectReference Include="..\RealEstateApp.Infrastructure.Identity\RealEstateApp.Infrastructure.Identity.csproj" />
+		<ProjectReference Include="..\RealEstateApp.Infrastructure.Shared\RealEstateApp.Infrastructure.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="bin\Debug\net9.0\cs\" />
+		<Folder Include="bin\Debug\net9.0\de\" />
+		<Folder Include="bin\Debug\net9.0\es\" />
+		<Folder Include="bin\Debug\net9.0\fr\" />
+		<Folder Include="bin\Debug\net9.0\it\" />
+		<Folder Include="bin\Debug\net9.0\ja\" />
+		<Folder Include="bin\Debug\net9.0\ko\" />
+		<Folder Include="bin\Debug\net9.0\pl\" />
+		<Folder Include="bin\Debug\net9.0\pt-BR\" />
+		<Folder Include="bin\Debug\net9.0\runtimes\browser\lib\net8.0\" />
+		<Folder Include="bin\Debug\net9.0\runtimes\unix\lib\net6.0\" />
+		<Folder Include="bin\Debug\net9.0\runtimes\win-arm64\native\" />
+		<Folder Include="bin\Debug\net9.0\runtimes\win-arm\native\" />
+		<Folder Include="bin\Debug\net9.0\runtimes\win-x64\native\" />
+		<Folder Include="bin\Debug\net9.0\runtimes\win-x86\native\" />
+		<Folder Include="bin\Debug\net9.0\runtimes\win\lib\net6.0\" />
+		<Folder Include="bin\Debug\net9.0\runtimes\win\lib\net9.0\" />
+		<Folder Include="bin\Debug\net9.0\ru\" />
+		<Folder Include="bin\Debug\net9.0\tr\" />
+		<Folder Include="bin\Debug\net9.0\zh-Hans\" />
+		<Folder Include="bin\Debug\net9.0\zh-Hant\" />
+		<Folder Include="Logs\" />
+		<Folder Include="obj\Debug\net9.0\refint\" />
+		<Folder Include="obj\Debug\net9.0\ref\" />
+		<Folder Include="obj\Debug\net9.0\staticwebassets\" />
+		<Folder Include="wwwroot\Images\Users\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="obj\Debug\net9.0\apphost.exe" />
+	  <None Include="obj\Debug\net9.0\RealEstateApp.WebApi.AssemblyInfoInputs.cache" />
+	  <None Include="obj\Debug\net9.0\RealEstateApp.WebApi.assets.cache" />
+	  <None Include="obj\Debug\net9.0\RealEstateApp.WebApi.csproj.AssemblyReference.cache" />
+	  <None Include="obj\Debug\net9.0\RealEstateApp.WebApi.GeneratedMSBuildEditorConfig.editorconfig" />
+	  <None Include="obj\RealEstateApp.WebApi.csproj.nuget.g.props" />
+	  <None Include="obj\RealEstateApp.WebApi.csproj.nuget.g.targets" />
+	</ItemGroup>
+
+</Project>

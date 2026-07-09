@@ -1,0 +1,53 @@
+﻿@model RealEstateApp.Core.Application.Dtos.Agent.AgentDto
+
+@{
+    ViewData["Title"] = "Mi Perfil";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow p-4">
+            <h3 class="mb-4"><i class="fas fa-user me-2"></i>Mi Perfil</h3>
+
+            <form asp-action="MyProfile" method="post" enctype="multipart/form-data">
+                <div class="text-center mb-4">
+                    @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                    {
+                        <img src="@Model.PhotoUrl" class="rounded-circle mb-3"
+                             style="width:120px;height:120px;object-fit:cover;" alt="Foto" />
+                    }
+                    else
+                    {
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center
+                            justify-content-center mx-auto mb-3" style="width:120px;height:120px;">
+                            <i class="fas fa-user fa-3x"></i>
+                        </div>
+                    }
+                    <input type="file" name="photo" class="form-control" accept="image/*" />
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input name="FirstName" value="@Model.FirstName" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Apellido</label>
+                        <input name="LastName" value="@Model.LastName" class="form-control" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Teléfono</label>
+                    <input name="Phone" value="@Model.Phone" class="form-control" />
+                </div>
+                <div class="d-flex gap-2">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>Volver
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i>Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

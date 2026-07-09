@@ -1,0 +1,78 @@
+﻿@model List<RealEstateApp.Core.Application.Dtos.Property.PropertyDto>
+
+@{
+    ViewData["Title"] = "Propiedades del agente";
+    var agent = ViewBag.Agent;
+}
+
+<div class="d-flex align-items-center mb-4">
+    @if (!string.IsNullOrEmpty(agent.PhotoUrl))
+    {
+        <img src="@agent.PhotoUrl" class="rounded-circle me-3"
+             style="width:70px;height:70px;object-fit:cover;" alt="@agent.FullName" />
+    }
+    else
+    {
+        <div class="rounded-circle bg-primary text-white d-flex align-items-center
+            justify-content-center me-3" style="width:70px;height:70px;">
+            <i class="fas fa-user fa-2x"></i>
+        </div>
+    }
+    <div>
+        <h3 class="mb-0">@agent.FullName</h3>
+        <p class="text-muted mb-0">@agent.PropertyCount propiedades disponibles</p>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <i class="fas fa-home fa-5x text-muted mb-3"></i>
+        <h4 class="text-muted">Este agente no tiene propiedades disponibles</h4>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var property in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    @if (property.Images != null && property.Images.Any())
+                    {
+                        <img src="@property.Images.First()" class="card-img-top"
+                             style="height:200px;object-fit:cover;" alt="Propiedad" />
+                    }
+                    else
+                    {
+                        <div class="bg-secondary text-white d-flex align-items-center
+                            justify-content-center" style="height:200px;">
+                            <i class="fas fa-home fa-3x"></i>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">@property.PropertyTypeName</span>
+                        <span class="badge bg-success mb-2">@property.SaleTypeName</span>
+                        <h6 class="card-title">Código: @property.Code</h6>
+                        <h5 class="text-primary">RD$ @property.Price.ToString("N2")</h5>
+                        <div class="d-flex gap-3 text-muted">
+                            <span><i class="fas fa-bed me-1"></i>@property.Bedrooms</span>
+                            <span><i class="fas fa-bath me-1"></i>@property.Bathrooms</span>
+                            <span><i class="fas fa-ruler-combined me-1"></i>@property.LandSize mt</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@property.Id"
+                           class="btn btn-outline-primary btn-sm w-100">
+                            <i class="fas fa-eye me-1"></i>Ver detalle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<a asp-action="Index" class="btn btn-secondary mt-4">
+    <i class="fas fa-arrow-left me-2"></i>Volver a agentes
+</a>

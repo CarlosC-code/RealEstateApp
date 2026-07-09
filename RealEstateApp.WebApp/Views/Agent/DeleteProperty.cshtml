@@ -1,0 +1,27 @@
+﻿@model RealEstateApp.Core.Application.Dtos.Property.PropertyDto
+
+@{
+    ViewData["Title"] = "Eliminar Propiedad";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow text-center p-4">
+            <i class="fas fa-exclamation-triangle fa-4x text-danger mb-3"></i>
+            <h4>¿Está seguro que desea eliminar esta propiedad?</h4>
+            <p class="text-muted fw-bold">Código: @Model.Code</p>
+            <p class="text-muted">@Model.PropertyTypeName - RD$ @Model.Price.ToString("N2")</p>
+            <div class="d-flex gap-2 justify-content-center mt-3">
+                <a asp-action="Properties" class="btn btn-secondary">
+                    <i class="fas fa-times me-1"></i>Cancelar
+                </a>
+                <form asp-action="DeletePropertyConfirmed" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash me-1"></i>Aceptar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

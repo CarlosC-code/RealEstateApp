@@ -1,0 +1,60 @@
+﻿@model List<RealEstateApp.Core.Application.Dtos.FavoriteProperty.FavoritePropertyDto>
+
+@{
+    ViewData["Title"] = "Mis Propiedades Favoritas";
+}
+
+<h2 class="mb-4"><i class="fas fa-heart text-danger me-2"></i>Mis Propiedades Favoritas</h2>
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <i class="fas fa-heart-broken fa-5x text-muted mb-3"></i>
+        <h4 class="text-muted">No tienes propiedades favoritas aún</h4>
+        <a asp-action="Index" class="btn btn-primary mt-3">Ver propiedades</a>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var favorite in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    @if (favorite.Images != null && favorite.Images.Any())
+                    {
+                        <img src="@favorite.Images.First()" class="card-img-top" style="height:200px;object-fit:cover;" alt="Propiedad" />
+                    }
+                    else
+                    {
+                        <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:200px;">
+                            <i class="fas fa-home fa-3x"></i>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">@favorite.PropertyTypeName</span>
+                        <span class="badge bg-success mb-2">@favorite.SaleTypeName</span>
+                        <h6>Código: @favorite.PropertyCode</h6>
+                        <h5 class="text-primary">RD$ @favorite.Price.ToString("N2")</h5>
+                        <div class="d-flex gap-3 text-muted">
+                            <span><i class="fas fa-bed me-1"></i>@favorite.Bedrooms</span>
+                            <span><i class="fas fa-bath me-1"></i>@favorite.Bathrooms</span>
+                            <span><i class="fas fa-ruler-combined me-1"></i>@favorite.LandSize mt</span>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex gap-2">
+                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@favorite.PropertyId" class="btn btn-outline-primary btn-sm flex-grow-1">
+                            <i class="fas fa-eye me-1"></i>Ver detalle
+                        </a>
+                        <form asp-action="ToggleFavorite" method="post">
+                            <input type="hidden" name="propertyId" value="@favorite.PropertyId" />
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fas fa-heart-broken"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

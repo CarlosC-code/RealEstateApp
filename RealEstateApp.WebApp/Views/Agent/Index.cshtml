@@ -1,0 +1,70 @@
+﻿@model List<RealEstateApp.Core.Application.Dtos.Property.PropertyDto>
+@{
+    ViewData["Title"] = "Mis Propiedades";
+}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-home me-2"></i>Mis Propiedades</h2>
+    <a asp-action="Properties" class="btn btn-primary">
+        <i class="fas fa-cog me-1"></i>Mantenimiento
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <i class="fas fa-home fa-5x text-muted mb-3"></i>
+        <h4 class="text-muted">No tienes propiedades registradas</h4>
+        <a asp-action="CreateProperty" class="btn btn-primary mt-3">
+            <i class="fas fa-plus me-1"></i>Crear propiedad
+        </a>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var property in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    @if (property.Images != null && property.Images.Any())
+                    {
+                        <img src="@property.Images.First()" class="card-img-top"
+                             style="height:200px;object-fit:cover;" alt="Propiedad" />
+                    }
+                    else
+                    {
+                        <div class="bg-secondary text-white d-flex align-items-center
+                            justify-content-center" style="height:200px;">
+                            <i class="fas fa-home fa-3x"></i>
+                        </div>
+                    }
+                    <div class="card-body">
+                        @if (property.Status == "Sold")
+                        {
+                            <span class="badge bg-danger mb-2">Vendida</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success mb-2">Disponible</span>
+                        }
+                        <span class="badge bg-primary mb-2">@property.PropertyTypeName</span>
+                        <span class="badge bg-success mb-2">@property.SaleTypeName</span>
+                        <h6>Código: @property.Code</h6>
+                        <h5 class="text-primary">RD$ @property.Price.ToString("N2")</h5>
+                        <div class="d-flex gap-3 text-muted">
+                            <span><i class="fas fa-bed me-1"></i>@property.Bedrooms</span>
+                            <span><i class="fas fa-bath me-1"></i>@property.Bathrooms</span>
+                            <span><i class="fas fa-ruler-combined me-1"></i>@property.LandSize mt</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@property.Id"
+                           class="btn btn-outline-primary btn-sm w-100">
+                            <i class="fas fa-eye me-1"></i>Ver detalle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

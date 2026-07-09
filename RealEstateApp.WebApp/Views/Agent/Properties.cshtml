@@ -1,0 +1,68 @@
+﻿@model List<RealEstateApp.Core.Application.Dtos.Property.PropertyDto>
+
+@{
+    ViewData["Title"] = "Mantenimiento de Propiedades";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-cog me-2"></i>Mantenimiento de Propiedades</h2>
+    <a asp-action="CreateProperty" class="btn btn-primary">
+        <i class="fas fa-plus me-1"></i>Nueva Propiedad
+    </a>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <i class="fas fa-home fa-5x text-muted mb-3"></i>
+        <h4 class="text-muted">No tienes propiedades registradas</h4>
+    </div>
+}
+else
+{
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Código</th>
+                        <th>Tipo</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var property in Model)
+                    {
+                        <tr>
+                            <td>@property.Code</td>
+                            <td>@property.PropertyTypeName</td>
+                            <td>RD$ @property.Price.ToString("N2")</td>
+                            <td>
+                                <span class="badge @(property.Status == "Available" ? "bg-success" : "bg-danger")">
+                                    @(property.Status == "Available" ? "Disponible" : "Vendida")
+                                </span>
+                            </td>
+                            <td>
+                                <a asp-action="EditProperty" asp-route-id="@property.Id"
+                                   class="btn btn-primary btn-sm">
+                                    <i class="fas fa-edit me-1"></i>Editar
+                                </a>
+                                <a asp-action="DeleteProperty" asp-route-id="@property.Id"
+                                   class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash me-1"></i>Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

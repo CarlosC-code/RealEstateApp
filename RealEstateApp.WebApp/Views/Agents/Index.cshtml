@@ -1,0 +1,58 @@
+﻿@model List<RealEstateApp.Core.Application.Dtos.Agent.AgentDto>
+
+@{
+    ViewData["Title"] = "Agentes";
+}
+
+<div class="mb-4">
+    <form asp-action="Index" method="get">
+        <div class="input-group">
+            <input type="text" name="name" value="@ViewBag.SearchName"
+                   class="form-control" placeholder="Buscar agente por nombre..." />
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search me-1"></i>Buscar
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-times me-1"></i>Limpiar
+            </a>
+        </div>
+    </form>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <i class="fas fa-users fa-5x text-muted mb-3"></i>
+        <h4 class="text-muted">No se encontraron agentes</h4>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        @foreach (var agent in Model)
+        {
+            <div class="col">
+                <a asp-action="Properties" asp-route-id="@agent.Id" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm text-center p-3">
+                        @if (!string.IsNullOrEmpty(agent.PhotoUrl))
+                        {
+                            <img src="@agent.PhotoUrl" class="rounded-circle mx-auto mb-3"
+                                 style="width:100px;height:100px;object-fit:cover;" alt="@agent.FullName" />
+                        }
+                        else
+                        {
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center
+                                justify-content-center mx-auto mb-3" style="width:100px;height:100px;">
+                                <i class="fas fa-user fa-3x"></i>
+                            </div>
+                        }
+                        <h5 class="card-title text-dark">@agent.FullName</h5>
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-home me-1"></i>@agent.PropertyCount propiedades
+                        </p>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+}

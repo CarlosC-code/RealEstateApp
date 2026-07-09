@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RealEstateApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <i class="fas fa-home me-2"></i>RealEstateApp
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="Index">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="Agents">Agentes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="PropertyTypes">Tipos de Propiedades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="SaleTypes">Tipos de Ventas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="Improvements">Mejoras</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="Admins">Administradores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="Developers">Desarrolladores</a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("Agent"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Agent" asp-action="Index">Mis Propiedades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Agent" asp-action="Properties">Mantenimiento</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Agent" asp-action="MyProfile">Mi Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Agent" asp-action="Chats">
+                                <i class="fas fa-comments me-1"></i>Chats
+                            </a>
+                        </li>
+                    }
+
+                    @if (!User.Identity!.IsAuthenticated || User.IsInRole("Client"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Agents" asp-action="Index">Agentes</a>
+                        </li>
+                    }
+
+                    @if (!User.Identity!.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Login" asp-action="Register">Únete a la app</a>
+                        </li>
+                    }
+
+                    @if (User.IsInRole("Client"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="MyProperties">Mis propiedades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="MyOffers">
+                                <i class="fas fa-tag me-1"></i>Mis Ofertas
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <ul class="navbar-nav">
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Login" asp-action="LogOut">
+                                <i class="fas fa-sign-out-alt me-1"></i>Cerrar sesión
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Login" asp-action="Index">
+                                <i class="fas fa-sign-in-alt me-1"></i>Iniciar sesión
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p class="mb-0">© 2025 RealEstateApp. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,97 @@
+﻿@model List<RealEstateApp.Core.Application.Dtos.Admin.DeveloperListDto>
+@{
+    ViewData["Title"] = "Desarrolladores";
+}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-code me-2"></i>Desarrolladores</h2>
+    <div class="d-flex gap-2">
+        <a asp-action="CreateDeveloper" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i>Nuevo Desarrollador
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Volver
+        </a>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Cédula</th>
+                    <th>Correo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dev in Model)
+                {
+                    <tr>
+                        <td>@dev.FirstName @dev.LastName</td>
+                        <td>@dev.UserName</td>
+                        <td>@dev.IdCard</td>
+                        <td>@dev.Email</td>
+                        <td>
+                            <span class="badge @(dev.IsActive ? "bg-success" : "bg-danger")">
+                                @(dev.IsActive ? "Activo" : "Inactivo")
+                            </span>
+                        </td>
+                        <td>
+                            <a asp-action="EditDeveloper" asp-route-id="@dev.Id" class="btn btn-primary btn-sm">
+                                <i class="fas fa-edit me-1"></i>Editar
+                            </a>
+                            <button type="button"
+                                    class="btn btn-sm @(dev.IsActive ? "btn-warning" : "btn-success")"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#confirmModal"
+                                    data-id="@dev.Id"
+                                    data-name="@dev.FirstName @dev.LastName"
+                                    data-action="@(dev.IsActive ? "Inactivar" : "Activar")">
+                                <i class="fas @(dev.IsActive ? "fa-ban" : "fa-check") me-1"></i>
+                                @(dev.IsActive ? "Inactivar" : "Activar")
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a id="confirmBtn" href="#" class="btn btn-primary">Sí</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var confirmModal = document.getElementById('confirmModal');
+        confirmModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            var name = button.getAttribute('data-name');
+            var action = button.getAttribute('data-action');
+            document.getElementById('confirmMessage').textContent =
+                '¿Está seguro que desea ' + action + ' al desarrollador ' + name + '?';
+            document.getElementById('confirmBtn').href = '/Admin/ToggleDeveloperStatus/' + id;
+        });
+    </script>
+}
